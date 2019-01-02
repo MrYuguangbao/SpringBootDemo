@@ -1,0 +1,9 @@
+server:
+  port: 18080
+  servlet:
+    context-path: /springboot
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    mode: HTML5

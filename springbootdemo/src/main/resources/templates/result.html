@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot 结果页面</title>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+
+<script>
+    // $(function () {
+    //     console.log("页面加载完毕！");
+    // });
+    var url1 = "/springboot/responseBodyDemo";
+    var url2 = "/springboot/requestParamDemo";
+    function testAjax(){
+        console.log("开始 Ajax 请求");
+        var param = {
+            "id":100,
+            "title":"title_ajax_param",
+            "author":"author_ajax_param",
+            "content":"content_ajax_param",
+            "type":"type_ajax_param",
+            "createTime":"createtime_ajax_param"
+        };
+        $.ajax({
+            type:"POST",
+            // data:JSON.stringify(param),
+            url:url2,
+            contentType:"application/json;charset=UTF-8",
+            timeout:60000,
+            async:true,
+            //dataType:"application/json;charset=UTF-8",
+            success:function(data){
+                console.log("data:\n"+JSON.stringify(data.result));
+                var html = "";
+                // html += "<i>"+data.result.id+"</i><br><h4>"+data.result.author+"</h4><label>"+data.result.content+"</label>"
+                //$("#ajax_result").html(data.result.id+","+data.result.author+","+data.result.content+","+data.result.type+","+data.result.createTime);
+                $("#ajax_result").html(html);
+            },
+            error:function (data) {
+                console.log("error:\n"+JSON.stringify(data));
+            },
+            complete:function(data){
+                console.log("complete !");
+            }
+        });
+    }
+    function f() {
+        alert("ajax 测试");
+    }
+
+</script>
+<body>
+
+<div>
+
+
+    <!--<strong>json 结果</strong><i th:text="${resultJson}"></i>-->
+    <table>
+        <thead> 结果列表 </thead>
+        <tbody>
+            <th>编号</th><th>标题</th><th>作者</th><th>内容</th><th>文档类型</th><th>创建时间</th>
+            <tr th:each="element:${resultList}">
+                <td th:text="${element.getId()}"></td>
+                <td th:text="${element.getTitle()}"></td>
+                <td th:text="${element.getAuthor()}"></td>
+                <td th:text="${element.getContent()}"></td>
+                <td th:text="${element.getType()}"></td>
+                <td th:text="${element.getCreateTime()}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <button onclick="f()">测试 Alert</button>
+    </div>
+    <div>
+        <button onclick="testAjax()">测试 Ajax</button>
+    </div>
+    <h1 id="ajax_result"></h1>
+</div>
+</body>
+</html>
